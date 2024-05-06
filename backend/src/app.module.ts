@@ -2,6 +2,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { join } from 'path';
       // schemaファイルのパスを指定
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    TaskModule,
   ],
 })
 export class AppModule {}
