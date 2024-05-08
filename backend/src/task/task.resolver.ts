@@ -1,3 +1,4 @@
+import { CreateTaskInput } from './dto/createTask.input';
 import { Task } from './models/task_model';
 import { TaskService } from './task.service';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
@@ -13,11 +14,7 @@ export class TaskResolver {
   }
 
   @Mutation(() => Task)
-  createTask(
-    @Args('name') name: string,
-    @Args('dueDate') dueDate: string,
-    @Args('description', { nullable: true }) description: string
-  ): Task {
-    return this.taskService.createTask(name, dueDate, description);
+  createTask(@Args('createTaskInput') createTaskInput: CreateTaskInput): Task {
+    return this.taskService.createTask(createTaskInput);
   }
 }
