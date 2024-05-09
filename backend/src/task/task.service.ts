@@ -2,10 +2,12 @@ import { Task } from '@prisma/client';
 import { PrismaService } from './../prisma/prisma.service';
 import { CreateTaskInput } from './dto/createTask.input';
 import { Injectable } from '@nestjs/common';
+import { UpdateTaskInput } from './dto/updateTask.input';
 
 @Injectable()
 export class TaskService {
   constructor(private readonly prismaService: PrismaService) {}
+
   async getTasks(): Promise<Task[]> {
     return this.prismaService.task.findMany();
   }
@@ -18,6 +20,14 @@ export class TaskService {
         dueDate,
         description,
       },
+    });
+  }
+
+  async updateTask(updateTaskInput: UpdateTaskInput): Promise<Task> {
+    const { id, name, dueDate, status, description } = updateTaskInput;
+    return await this.prismaService.task.update({
+      data: { name, dueDate, status, description },
+      where: { id },
     });
   }
 }
