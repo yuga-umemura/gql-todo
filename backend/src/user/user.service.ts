@@ -20,4 +20,12 @@ export class UserService {
       },
     });
   }
+
+  async getUser(email: string): Promise<User> {
+    return await this.prismaService.user.findUnique({
+      // findUniqueメソッドでは、schema.prismaで@id(id属性)もしくは@unique(unique属性)を
+      // つけたフィールドのみ検索条件（where）として使用可能
+      where: { email },
+    });
+  }
 }
