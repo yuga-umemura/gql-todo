@@ -11,8 +11,10 @@ export class TaskResolver {
 
   // タスクがない場合は空の配列を返却（nullable: 'items)
   @Query(() => [TaskModel], { nullable: 'items' })
-  async getTasks(): Promise<Task[]> {
-    return await this.taskService.getTasks();
+  async getTasks(
+    @Args('userId', { type: () => Int }) userId: number,
+  ): Promise<Task[]> {
+    return await this.taskService.getTasks(userId);
   }
 
   @Mutation(() => TaskModel)
